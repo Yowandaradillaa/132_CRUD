@@ -23,11 +23,25 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
     if (err) {
-        console.error('Error connecting to database:', err);
+        console.error('Error connecting to database:'+ err.stack);
         return;
     }
     console.log('Connected to database');
 });
+
+app.get('/api/mahasiswa', (req, res) => {
+    db.query('SELECT * FROM biodata', (err, results) => {
+        if (err) {
+        console.error('Error fetching data: ' + err.stack);
+        res.status(500).send('Error fetching mahasiswa');
+        return;
+    }
+    res.json(results);
+    });
+});
+
+
+
 
 
 
