@@ -56,6 +56,20 @@ app.post('/api/mahasiswa', (req, res) => {
     });
 }); 
 
+app.put('/api/mahasiswa/:id', (req, res) => {
+    const userId = req.params.id;
+    const { nama, alamat, agama } = req.body;
+    db.query('UPDATE biodata SET nama = ?, alamat = ?, agama = ? WHERE id = ?', [nama, alamat, agama, userId], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Gagal memperbarui mahasiswa' });
+        }
+        res.json({ message: 'Mahasiswa berhasil diperbarui' });
+    });
+});
+
+
+
 
 
 
