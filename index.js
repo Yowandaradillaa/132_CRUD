@@ -41,16 +41,16 @@ app.get('/api/mahasiswa', (req, res) => {
 });
 
 app.post('/api/mahasiswa', (req, res) => {
-    const { nama, nim, alamat } = req.body;
+    const { nama, alamat, agama } = req.body;
 
-    if (!nama || !nim || !alamat) {
+    if (!nama || !alamat || !agama) {
         return res.status(400).json({ error: 'Nama, alamat, agama harus diisi' });
     }
 
-    db.query('INSERT INTO biodata (nama, nim, alamat) VALUES (?, ?, ?)', [nama, nim, alamat], (err, results) => {
+    db.query('INSERT INTO biodata (nama, alamat, agama) VALUES (?, ?, ?)', [nama, alamat, agama], (err, results) => {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: 'Gagal menambahkan mahasiswa' });
+            return res.status(500).json({ message: 'Gagal menambahkan mahasiswa' });
         }
         res.status(201).json({ message: 'Mahasiswa berhasil ditambahkan', id: results.insertId });
     });
